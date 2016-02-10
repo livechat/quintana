@@ -70,7 +70,7 @@ notify_timed(Timer) ->
         {error, Name, nonexistent_metric} ->
             folsom_metrics:new_histogram(Name),
             folsom_metrics:safely_histogram_timed_notify(Timer);
-        ok ->
+        _ ->
             ok
     end.
 
@@ -88,7 +88,7 @@ notify(Fun, {Name, Value, Type, Attrs}) ->
         {error, Name, nonexistent_metric} ->
             folsom_metrics:Fun(Name, Type, Attrs),
             folsom_metrics:safely_notify(Name, Value);
-        ok ->
+        _ ->
             ok
     end;
 notify(Fun, {Name, Value}) ->
@@ -99,7 +99,7 @@ notify(Fun, Name, Value) ->
         {error, Name, nonexistent_metric} ->
             prepare(Fun, Name),
             folsom_metrics:safely_notify(Name, Value);
-        ok ->
+        _ ->
             ok
     end.
 
